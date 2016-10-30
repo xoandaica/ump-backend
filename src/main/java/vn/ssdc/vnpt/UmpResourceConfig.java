@@ -2,7 +2,7 @@ package vn.ssdc.vnpt;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
-import vn.ssdc.vnpt.deviceservice.DeviceEndpoint;
+import vn.ssdc.vnpt.demo.DemoEndpoint;
 
 /**
  * Created by vietnq on 10/21/16.
@@ -14,6 +14,6 @@ public class UmpResourceConfig extends ResourceConfig {
     }
 
     private void registerEndpoints() {
-        register(DeviceEndpoint.class);
+        register(DemoEndpoint.class);
     }
 }
