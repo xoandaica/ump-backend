@@ -7,10 +7,13 @@
 
 #### How to start?
 * Pre-requisite: Java, MySql,Redis, Maven
-* This project uses Liquibase (www.liquibase.org) to mange db change. Run this command to init the database: 
+* Create database named __ump__ in MySQL
+* Config connection information in _src/main/resources/liquibase/liquibase.properties_
+* Run this command to init the database: 
 ```
 mvn liquibase:update
 ```
+
 * Start application:
 ```
 mvn spring-boot:run
