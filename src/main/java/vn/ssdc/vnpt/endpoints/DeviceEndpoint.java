@@ -64,17 +64,23 @@ public class DeviceEndpoint {
      */
     @POST
     @Path(("/{deviceId}/reboot"))
-    public int rebootDeviceById(@PathParam("deviceId") String deviceId,
-                                @DefaultValue("3000") @QueryParam("timeout") String timeout) {
+    public AcsResponse rebootDeviceById(@PathParam("deviceId") String deviceId,
+                                        @DefaultValue("3000") @QueryParam("timeout") String timeout,
+                                        @DefaultValue("false") @QueryParam("now") boolean now) {
+        AcsResponse response = new AcsResponse();
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("timeout", timeout);
+        if (now == true) {
+            queryParams.put("connection_request", "connection_request");
+        }
         try {
             ResponseEntity<String> responseEntity = acsClient.reboot(deviceId, queryParams);
-            return responseEntity.getStatusCode().value();
+            response.httpResponseCode = responseEntity.getStatusCode().value();
         } catch (RestClientException e) {
-            return 404;
-        }
+            response.httpResponseCode = HttpStatus.NOT_FOUND.value();
 
+        }
+        return response;
     }
 
     /**
@@ -88,18 +94,22 @@ public class DeviceEndpoint {
      */
     @POST
     @Path(("/{deviceId}/factoryReset"))
-    public int factoryReset(@PathParam("deviceId") String deviceId,
-                            @DefaultValue("3000") @QueryParam("timeout") String timeout) {
+    public AcsResponse factoryResetDeviceById(@PathParam("deviceId") String deviceId,
+                                              @DefaultValue("3000") @QueryParam("timeout") String timeout,
+                                              @DefaultValue("false") @QueryParam("now") boolean now) {
+        AcsResponse response = new AcsResponse();
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("timeout", timeout);
+        if (now == true) {
+            queryParams.put("connection_request", "connection_request");
+        }
         try {
             ResponseEntity<String> responseEntity = acsClient.factoryReset(deviceId, queryParams);
-            int result = responseEntity.getStatusCode().value();
-            return result;
+            response.httpResponseCode = responseEntity.getStatusCode().value();
         } catch (RestClientException e) {
-            return 404;
+            response.httpResponseCode = HttpStatus.NOT_FOUND.value();
         }
-
+        return response;
     }
 
 

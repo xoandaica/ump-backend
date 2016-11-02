@@ -96,7 +96,6 @@ public class AcsClient {
         if (!ObjectUtils.empty(queryString)) {
             url.append("?" + queryString);
         }
-        url.append("&connection_request");
         return restTemplate.postForEntity(acsEndpoint + url.toString(), datas, String.class, queryParams);
     }
 
