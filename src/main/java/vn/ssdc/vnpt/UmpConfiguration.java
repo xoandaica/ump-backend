@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.client.RestTemplate;
 import vn.vnpt.ssdc.core.SsdcRedisCache;
 import vn.vnpt.ssdc.core.SsdcCache;
 import vn.vnpt.ssdc.jdbc.factories.RepositoryFactory;
@@ -34,5 +35,10 @@ public class UmpConfiguration {
     @Bean
     public RepositoryFactory repositoryFactory(DataSource dataSource, SsdcCache ssdcCache) {
         return new RepositoryFactory(dataSource, ssdcCache);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

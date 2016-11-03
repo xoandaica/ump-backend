@@ -1,4 +1,4 @@
-package vn.ssdc.vnpt.endpoints;
+package vn.ssdc.vnpt.devices.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,12 +18,14 @@ import java.util.Map;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 /**
+ * REST API for Device Management <br/>
+ *
  * Created by vietnq on 10/31/16.
  */
 @Component
-@Path(("/api/devices"))
+@Path(("/api/acs"))
 @Produces(APPLICATION_JSON)
-public class DeviceEndpoint {
+public class AcsEndpoint {
     @Autowired
     private AcsClient acsClient;
 
