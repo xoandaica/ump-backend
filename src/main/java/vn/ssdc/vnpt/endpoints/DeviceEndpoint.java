@@ -1,6 +1,7 @@
 package vn.ssdc.vnpt.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import vn.ssdc.vnpt.AcsClient;
@@ -28,27 +29,30 @@ public class DeviceEndpoint {
     @Autowired
     private AcsClient acsClient;
 
+
     @GET
     public AcsResponse searchDevices(@DefaultValue("{}") @QueryParam("query") String query,
-                                     @DefaultValue("50") @QueryParam("limit") String limit,
+                                     @DefaultValue("10") @QueryParam("limit") String limit,
                                      @DefaultValue("0") @QueryParam("offset") String offset,
                                      @QueryParam("parameters") String parameters,
                                      @QueryParam("sort") String sort) {
+
         AcsResponse response = new AcsResponse();
-        Map<String,String> queryParams = new HashMap<String, String>();
-        queryParams.put("query",query);
-        queryParams.put("limit",limit);
-        queryParams.put("skip",offset);
-        if(!ObjectUtils.empty(parameters)) {
-            queryParams.put("projection",parameters);
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("query", query);
+        queryParams.put("limit", limit);
+        queryParams.put("skip", offset);
+        if (!ObjectUtils.empty(parameters)) {
+            queryParams.put("projection", parameters);
         }
-        if(!ObjectUtils.empty(sort)) {
-            queryParams.put("sort",sort);
+        if (!ObjectUtils.empty(sort)) {
+            queryParams.put("sort", sort);
         }
-        ResponseEntity<String> responseEntity = this.acsClient.search("devices",queryParams);
+        ResponseEntity<String> responseEntity = this.acsClient.search("devices", queryParams);
         response.httpResponseCode = responseEntity.getStatusCodeValue();
         //total of search result is in http header [total]
         response.nbOfItems = Integer.parseInt(responseEntity.getHeaders().get("total").get(0));
+        System.out.println("max  = " + response.nbOfItems);
         response.body = responseEntity.getBody();
         return response;
     }
